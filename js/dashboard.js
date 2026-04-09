@@ -289,6 +289,7 @@ function renderEmployees(filterStatus = 'all') {
   empTbody.innerHTML = filtered.map(e => `
     <tr>
       <td><div class="emp-cell"><div class="emp-avatar" style="background:${e.color || '#6366f1'}">${e.name.split(' ').map(w=>w[0]).join('')}</div><div><div class="font-semibold" style="color:var(--gray-800)">${e.name}</div><div class="text-xs text-gray">${e.cargo}</div></div></div></td>
+      <td class="text-xs font-mono" style="color:var(--akm-blue-light)">${e.email || '---'}</td>
       <td>${e.cargo}</td><td><span class="badge badge-blue">${e.area}</span></td>
       <td><span class="badge ${statusBadge[e.status]}">${statusLabels[e.status]}</span></td>
       <td class="text-gray">${e.date}</td>
