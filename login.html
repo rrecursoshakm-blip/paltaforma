@@ -125,24 +125,41 @@
       loginBtn.classList.add('loading');
       loginBtn.disabled = true;
 
-      // Simulate API call
-      await new Promise(r => setTimeout(r, 1400));
+      // Real-time lookup in employees DB
+      const localEmps = JSON.parse(localStorage.getItem('akm_employees')) || [];
+      
+      let userFound = null;
 
-      // Demo credentials check
+      // Special check for Admin
       if (email === 'admin@akm.com' && password === 'akm2024') {
-        // Store session (localStorage works across file:// navigations)
-        localStorage.setItem('akm_user', JSON.stringify({
-          name: 'Admin AKM',
-          email: email,
-          role: 'Administrador',
-          avatar: 'A'
-        }));
-        // Redirect to dashboard
+        userFound = { name: 'Admin AKM', email: email, role: 'admin', avatar: 'A' };
+      } else {
+        // Find in employees
+        const emp = localEmps.find(e => e.email === email && e.password === password);
+        if (emp) {
+          if (emp.status === 'inactive') {
+            loginBtn.classList.remove('loading');
+            loginBtn.disabled = false;
+            errorText.textContent = 'Tu cuenta ha sido desactivada. Contacta a RRHH.';
+            errorMsg.classList.add('show');
+            return;
+          }
+          userFound = { 
+            name: emp.name, 
+            email: emp.email, 
+            role: emp.role || 'colab', 
+            avatar: emp.name.charAt(0).toUpperCase() 
+          };
+        }
+      }
+
+      if (userFound) {
+        localStorage.setItem('akm_user', JSON.stringify(userFound));
         window.location.href = 'dashboard.html';
       } else {
         loginBtn.classList.remove('loading');
         loginBtn.disabled = false;
-        errorText.textContent = 'Credenciales incorrectas. Usa admin@akm.com / akm2024';
+        errorText.textContent = 'Credenciales incorrectas. Verifica tu email y contraseña.';
         errorMsg.classList.add('show');
       }
     });

@@ -350,6 +350,81 @@
   </div>
 
 <script src="dashboard.js"></script>
+  <!-- MODAL: Employee Management (Restore) -->
+  <div class="modal-overlay" id="empModal" onclick="if(event.target===this) closeEmpModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Nuevo Colaborador</h3>
+        <button class="close-modal" onclick="closeEmpModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="empForm" onsubmit="saveEmployee(event)">
+          <input type="hidden" id="empId">
+          <div class="grid-2 gap-16 mb-16">
+            <div class="form-group">
+              <label class="form-label" for="empName">Nombre Completo</label>
+              <input type="text" id="empName" class="form-input" placeholder="Ej: María García" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="empEmail">Correo Electrónico (Login)</label>
+              <input type="email" id="empEmail" class="form-input" placeholder="ejemplo@akm.com" required>
+            </div>
+          </div>
+          <div class="grid-2 gap-16 mb-16">
+            <div class="form-group">
+              <label class="form-label" for="empCargo">Cargo / Puesto</label>
+              <input type="text" id="empCargo" class="form-input" placeholder="Ej: Analista" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="empArea">Área / Departamento</label>
+              <select id="empArea" class="form-input" required>
+                <option value="Recursos Humanos">Recursos Humanos</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Finanzas">Finanzas</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Bienestar">Bienestar</option>
+                <option value="Desarrollo">Desarrollo</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2 gap-16 mb-16">
+            <div class="form-group">
+              <label class="form-label" for="empSalary">Sueldo Base (S/)</label>
+              <input type="number" id="empSalary" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="empDate">Fecha de Ingreso</label>
+              <input type="date" id="empDate" class="form-input" required>
+            </div>
+          </div>
+          <div class="grid-2 gap-16 mb-24">
+            <div class="form-group">
+              <label class="form-label" for="empStatus">Estado</label>
+              <select id="empStatus" class="form-input" required>
+                <option value="active">Activo</option>
+                <option value="vacation">Vacaciones</option>
+                <option value="inactive">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="empSupervisor">Jefe Directo (Supervisor)</label>
+              <select id="empSupervisor" class="form-input">
+                <option value="">Ninguno (Gerencia)</option>
+                <option value="1">María García (Gerente RRHH)</option>
+                <option value="4">Pedro Ramírez (Jefe TI)</option>
+                <option value="10">Miguel Flores (Jefe Ventas)</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex gap-12">
+            <button type="button" class="btn btn-ghost" style="flex:1" onclick="closeEmpModal()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="flex:1">Guardar Colaborador</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: Digital Signature -->
   <div class="modal-overlay" id="signModal" onclick="if(event.target===this) closeSignModal()">
     <div class="modal-card" style="max-width: 450px;">
