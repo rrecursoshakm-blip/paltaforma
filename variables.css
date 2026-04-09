@@ -1,0 +1,74 @@
+/* =============================================
+   AKM HR Platform — Design System Variables
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* === Brand Colors === */
+  --akm-blue-deep:    #0f2447;
+  --akm-blue-mid:     #1a3a6b;
+  --akm-blue-light:   #2356a8;
+  --akm-cyan:         #38bdf8;
+  --akm-cyan-dark:    #0ea5e9;
+  --akm-yellow:       #f5a623;
+  --akm-yellow-dark:  #e0941a;
+
+  /* === Semantic Colors === */
+  --color-success:    #22c55e;
+  --color-success-bg: #dcfce7;
+  --color-warning:    #f59e0b;
+  --color-warning-bg: #fef3c7;
+  --color-danger:     #ef4444;
+  --color-danger-bg:  #fee2e2;
+  --color-info:       #38bdf8;
+  --color-info-bg:    #e0f2fe;
+
+  /* === Neutral Palette === */
+  --gray-50:   #f8fafc;
+  --gray-100:  #f1f5f9;
+  --gray-200:  #e2e8f0;
+  --gray-300:  #cbd5e1;
+  --gray-400:  #94a3b8;
+  --gray-500:  #64748b;
+  --gray-600:  #475569;
+  --gray-700:  #334155;
+  --gray-800:  #1e293b;
+  --gray-900:  #0f172a;
+
+  /* === Sidebar === */
+  --sidebar-bg:         #0a1d3d;
+  --sidebar-width:      260px;
+  --sidebar-item-hover: rgba(56,189,248,0.10);
+  --sidebar-item-active:#1a3a6b;
+
+  /* === Layout === */
+  --topbar-height: 64px;
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+
+  /* === Shadows === */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg:  0 10px 30px rgba(0,0,0,0.12);
+  --shadow-xl:  0 20px 60px rgba(0,0,0,0.18);
+  --shadow-blue: 0 8px 24px rgba(35,86,168,0.30);
+
+  /* === Typography === */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs:   11px;
+  --font-size-sm:   13px;
+  --font-size-base: 14px;
+  --font-size-md:   15px;
+  --font-size-lg:   18px;
+  --font-size-xl:   22px;
+  --font-size-2xl:  28px;
+  --font-size-3xl:  36px;
+
+  /* === Transitions === */
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow:   0.40s ease;
+}
