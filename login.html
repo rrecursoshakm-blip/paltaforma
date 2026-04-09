@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AKM HR — Iniciar Sesión</title>
+  <meta name="description" content="Plataforma de Gestión de Personas AKM. Inicia sesión para acceder a tu portal."/>
+  <link rel="stylesheet" href="css/login.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"/>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Logo -->
+      <div class="logo-area">
+        <div class="logo-badge">
+          <div class="logo-icon">A</div>
+          <div>
+            <div class="logo-text">AK<span>M</span></div>
+            <div class="logo-subtitle">Plataforma HR</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="login-title">Bienvenido de vuelta 👋</div>
+      <div class="login-desc">Ingresa tus credenciales para acceder al sistema</div>
+
+      <!-- Error Message -->
+      <div class="error-msg" id="errorMsg">
+        <span>⚠️</span>
+        <span id="errorText">Credenciales incorrectas. Intente nuevamente.</span>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" novalidate>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Correo electrónico</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉️</span>
+            <input class="form-input" type="email" id="email"
+              placeholder="usuario@akm.com" autocomplete="email"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input class="form-input" type="password" id="password"
+              placeholder="••••••••" autocomplete="current-password"/>
+            <button type="button" class="password-toggle" id="togglePassword">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-extras">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember"/>
+            <div class="checkbox-box"></div>
+            <span class="checkbox-text">Recordarme</span>
+          </label>
+          <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          <span class="btn-text">Ingresar al Sistema</span>
+          <div class="btn-spinner">
+            <div class="spinner"></div>
+          </div>
+        </button>
+
+      </form>
+
+      <!-- Demo Credentials -->
+      <div class="demo-creds">
+        <div class="demo-creds-title">🔑 Credenciales de Demo</div>
+        <p>Usuario: <strong>admin@akm.com</strong></p>
+        <p>Contraseña: <strong>akm2024</strong></p>
+      </div>
+
+      <div class="login-footer">
+        © 2025 AKM HR Platform · Todos los derechos reservados
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Password toggle
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    let visible = false;
+    toggleBtn.addEventListener('click', () => {
+      visible = !visible;
+      passwordInput.type = visible ? 'text' : 'password';
+      toggleBtn.textContent = visible ? '🙈' : '👁️';
+    });
+
+    // Form submission
+    const form = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const errorText = document.getElementById('errorText');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      errorMsg.classList.remove('show');
+
+      if (!email || !password) {
+        errorText.textContent = 'Por favor, completa todos los campos.';
+        errorMsg.classList.add('show');
+        return;
+      }
+
+      // Loading state
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+
+      // Simulate API call
+      await new Promise(r => setTimeout(r, 1400));
+
+      // Demo credentials check
+      if (email === 'admin@akm.com' && password === 'akm2024') {
+        // Store session (localStorage works across file:// navigations)
+        localStorage.setItem('akm_user', JSON.stringify({
+          name: 'Admin AKM',
+          email: email,
+          role: 'Administrador',
+          avatar: 'A'
+        }));
+        // Redirect to dashboard
+        window.location.href = 'dashboard.html';
+      } else {
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        errorText.textContent = 'Credenciales incorrectas. Usa admin@akm.com / akm2024';
+        errorMsg.classList.add('show');
+      }
+    });
+
+    // Auto-fill demo on click
+    document.querySelector('.demo-creds').addEventListener('click', () => {
+      document.getElementById('email').value = 'admin@akm.com';
+      document.getElementById('password').value = 'akm2024';
+    });
+  </script>
+
+</body>
+</html>

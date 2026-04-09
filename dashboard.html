@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AKM HR — Dashboard</title>
+  <meta name="description" content="Panel de gestión de personas AKM"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"/>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="#" class="sidebar-logo">
+      <div class="sidebar-logo-icon">A</div>
+      <div>
+        <div class="sidebar-logo-text">AK<span>M</span></div>
+        <div class="sidebar-logo-sub">Plataforma HR</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="sidebar-user">
+    <div class="user-avatar" id="sidebarAvatar">A<div class="status-dot"></div></div>
+    <div class="user-info">
+      <div class="user-name" id="sidebarName">Admin AKM</div>
+      <div class="user-role" id="sidebarRole">Administrador</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <div class="nav-item active" data-page="home" onclick="switchPage('home')">
+      <span class="nav-item-icon">🏠</span>
+      <span class="nav-item-text">Inicio</span>
+    </div>
+    <div class="nav-item" data-page="employees" onclick="switchPage('employees')">
+      <span class="nav-item-icon">👥</span>
+      <span class="nav-item-text">Colaboradores</span>
+      <span class="nav-badge blue">128</span>
+    </div>
+
+    <div class="nav-section-label">Administración</div>
+    <div class="nav-item" data-page="payroll" onclick="switchPage('payroll')">
+      <span class="nav-item-icon">💰</span>
+      <span class="nav-item-text">Planillas</span>
+    </div>
+    <div class="nav-item" data-page="attendance" onclick="switchPage('attendance')">
+      <span class="nav-item-icon">✅</span>
+      <span class="nav-item-text">Asistencia</span>
+    </div>
+    <div class="nav-item" data-page="org" onclick="switchPage('org')">
+      <span class="nav-item-icon">🌳</span>
+      <span class="nav-item-text">Organización</span>
+    </div>
+    <div class="nav-item" data-page="documents" onclick="switchPage('documents')">
+      <span class="nav-item-icon">📄</span>
+      <span class="nav-item-text">Documentos</span>
+      <span class="nav-badge">3</span>
+    </div>
+
+    <div class="nav-item" data-page="recruitment" onclick="switchPage('recruitment')">
+      <span class="nav-item-icon">🎯</span>
+      <span class="nav-item-text">Reclutamiento</span>
+      <span class="nav-badge blue">5</span>
+    </div>
+    <div class="nav-section-label">Desarrollo</div>
+    <div class="nav-item" data-page="performance" onclick="switchPage('performance')">
+      <span class="nav-item-icon">📊</span>
+      <span class="nav-item-text">Desempeño</span>
+    </div>
+    <div class="nav-item" data-page="training" onclick="switchPage('training')">
+      <span class="nav-item-icon">🎓</span>
+      <span class="nav-item-text">Capacitaciones</span>
+    </div>
+    <div class="nav-item" data-page="analytics" onclick="switchPage('analytics')">
+      <span class="nav-item-icon">📈</span>
+      <span class="nav-item-text">Analítica</span>
+    </div>
+
+    <div class="nav-section-label">Herramientas</div>
+    <div class="nav-item" data-page="aichat" onclick="switchPage('aichat')">
+      <span class="nav-item-icon">🤖</span>
+      <span class="nav-item-text">AKM AI</span>
+      <span class="nav-badge red">Nuevo</span>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="btn-logout" onclick="logout()">
+      <span class="icon">🚪</span>
+      <span class="text">Cerrar Sesión</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-title" id="pageTitle">Inicio <span>Panel principal</span></div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar colaborador, doc..."/>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" title="Notificaciones" id="notifBtn">🔔<div class="notif-dot"></div></button>
+      <button class="icon-btn" title="Ajustes">⚙️</button>
+      <div class="topbar-user" id="topbarUser">
+        <div class="avatar" id="topAvatar">A</div>
+        <div>
+          <div class="uname" id="topName">Admin AKM</div>
+          <div class="urole" id="topRole">Administrador</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE: Home -->
+  <div class="page-content page" id="page-home">
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <div class="welcome-greeting" id="greetingText">Buenos días ☀️</div>
+        <div class="welcome-title" id="welcomeName">Bienvenido, Admin</div>
+        <div class="welcome-subtitle">Aquí tienes un resumen de tu equipo hoy, 4 de abril de 2025</div>
+      </div>
+      <div class="welcome-actions">
+        <button class="btn btn-yellow" onclick="switchPage('payroll')">💰 Ver Planillas</button>
+        <button class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,.3)" onclick="switchPage('aichat')">🤖 AKM AI</button>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="homeStats"></div>
+    <div class="grid-2 gap-24">
+      <div class="card"><div class="card-header"><div class="card-title">Asistencia Hoy</div><span class="badge badge-info">En vivo</span></div><div class="card-body"><canvas id="chartAttendToday" height="200"></canvas></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Actividad Reciente</div></div><div class="card-body" id="recentActivity"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Employees -->
+  <div class="page-content page hidden" id="page-employees">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Colaboradores</h2><p class="text-sm text-gray mt-8">Gestiona la información de tu equipo</p></div>
+      <button class="btn btn-primary" id="addEmpBtn" onclick="openEmpModal()">➕ Nuevo Colaborador</button>
+    </div>
+    <div class="stats-grid" id="empStats"></div>
+    <div class="card"><div class="card-header"><div class="card-title">Lista de Colaboradores</div><div class="flex gap-8"><button class="btn btn-outline btn-sm" onclick="exportEmployees()">📥 Exportar</button><button class="btn btn-ghost btn-sm" onclick="toggleFilters()">🔽 Filtros</button></div></div><div class="card-body" style="padding:0"><div class="table-wrapper"><table id="employeeTable"><thead><tr><th>Colaborador</th><th>Cargo</th><th>Área</th><th>Estado</th><th>Ingreso</th><th>Acciones</th></tr></thead><tbody></tbody></table></div></div></div>
+  </div>
+
+  <!-- PAGE: Payroll -->
+  <div class="page-content page hidden" id="page-payroll">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Sistema de Planillas</h2><p class="text-sm text-gray mt-8">Período: Abril 2025</p></div>
+      <div class="flex gap-8"><button class="btn btn-outline" onclick="exportPayroll()">📥 Exportar PDF</button><button class="btn btn-primary" onclick="renderPayrollTable()">🧮 Calcular Planilla</button></div>
+    </div>
+    <div class="stats-grid" id="payrollStats"></div>
+    <div class="card"><div class="card-header"><div class="card-title">Detalle de Planilla</div></div><div class="card-body" style="padding:0"><div class="table-wrapper"><table id="payrollTable"><thead><tr><th>Colaborador</th><th>Sueldo Base</th><th>Bonos</th><th>Descuentos</th><th>Neto a Pagar</th><th>Estado</th></tr></thead><tbody></tbody></table></div></div></div>
+  </div>
+
+  <!-- PAGE: Attendance -->
+  <div class="page-content page hidden" id="page-attendance">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Control de Asistencia</h2><p class="text-sm text-gray mt-8">Abril 2025</p></div>
+      <div class="flex gap-8"><button class="btn btn-outline">📅 Mes Anterior</button><button class="btn btn-primary" onclick="downloadAttendanceReport()">⬇️ Descargar Reporte</button></div>
+    </div>
+    <div class="stats-grid" id="attendStats"></div>
+    
+    <!-- Quick Marking Panel -->
+    <div class="card mb-24" style="background: linear-gradient(135deg, white 0%, #f8fafc 100%);">
+      <div class="card-body" style="padding: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:20px;">
+            <div id="bigClock" style="font-size: 32px; font-weight: 800; color: var(--akm-blue-deep); min-width: 140px;">00:00:00</div>
+            <div style="width:1px; height:40px; background:var(--gray-200);"></div>
+            <div>
+              <div id="locationStatus" style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:var(--gray-500);">
+                <div class="beacon" id="beacon"></div> Buscando ubicación...
+              </div>
+              <div id="distanceInfo" style="font-size:12px; color:var(--gray-400); margin-top:4px;">Inicia el marcado para validar tu posición.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-primary" id="btnCheckIn" onclick="markAttendance('ingreso')" disabled style="padding: 12px 24px; font-size: 15px; opacity:0.5; cursor:not-allowed;">📥 Marcar Ingreso</button>
+            <button class="btn btn-outline" id="btnCheckOut" onclick="markAttendance('salida')" disabled style="padding: 12px 24px; font-size: 15px; opacity:0.5; cursor:not-allowed;">📤 Marcar Salida</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2 gap-24">
+      <div class="card"><div class="card-header"><div class="card-title">Calendario de Asistencia</div></div><div class="card-body"><div class="calendar-grid" id="attendCalendar"></div></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Registro del Día</div><span class="badge badge-success">Hoy</span></div><div class="card-body" id="todayAttendList"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Documents -->
+  <div class="page-content page hidden" id="page-documents">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Gestión Documental</h2><p class="text-sm text-gray mt-8">Firma electrónica y repositorio digital</p></div>
+      <button class="btn btn-primary">📤 Subir Documento</button>
+    </div>
+    <div class="stats-grid" id="docStats"></div>
+    <div class="card"><div class="card-header"><div class="card-title">Documentos</div><div class="flex gap-8"><button class="btn btn-ghost btn-sm">Todos</button><button class="btn btn-ghost btn-sm">Pendientes</button><button class="btn btn-ghost btn-sm">Firmados</button></div></div><div class="card-body" style="padding:0"><div class="table-wrapper"><table id="docTable"><thead><tr><th>Documento</th><th>Tipo</th><th>Colaborador</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead><tbody></tbody></table></div></div></div>
+  </div>
+
+  <!-- PAGE: Recruitment (ATS) -->
+  <div class="page-content page hidden" id="page-recruitment">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Portal de Reclutamiento (ATS)</h2><p class="text-sm text-gray mt-8">Gestiona tus vacantes y candidatos</p></div>
+      <button class="btn btn-primary">🏷️ Publicar Vacante</button>
+    </div>
+    <div class="stats-grid" id="recStats"></div>
+    <div class="grid-2 gap-24">
+      <div class="card"><div class="card-header"><div class="card-title">Vacantes Activas</div></div><div class="card-body" id="vacancyList"></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Pipeline de Candidatos</div></div><div class="card-body" id="candidateList"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Performance -->
+  <div class="page-content page hidden" id="page-performance">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Evaluación de Desempeño</h2><p class="text-sm text-gray mt-8">Ciclo Q1 2025</p></div>
+      <button class="btn btn-primary">🆕 Nueva Evaluación</button>
+    </div>
+    <div class="stats-grid" id="perfStats"></div>
+    <div class="grid-2 gap-24">
+      <div class="card"><div class="card-header"><div class="card-title">Desempeño por Área</div></div><div class="card-body"><canvas id="chartPerformance" height="250"></canvas></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Top Performers</div></div><div class="card-body" id="topPerformers"></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Training -->
+  <div class="page-content page hidden" id="page-training">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Capacitaciones</h2><p class="text-sm text-gray mt-8">Plataforma de aprendizaje corporativo</p></div>
+      <button class="btn btn-primary">➕ Nuevo Curso</button>
+    </div>
+    <div class="stats-grid" id="trainStats"></div>
+    <div class="grid-3 gap-24" id="courseGrid"></div>
+  </div>
+
+  <!-- PAGE: Analytics -->
+  <div class="page-content page hidden" id="page-analytics">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Analítica de Talento</h2><p class="text-sm text-gray mt-8">Indicadores clave y tendencias</p></div>
+      <div class="flex gap-8"><button class="btn btn-outline">📅 Q1 2025</button><button class="btn btn-primary">📥 Descargar</button></div>
+    </div>
+    <div class="stats-grid" id="analyticsStats"></div>
+    <div class="grid-2 gap-24 mb-24">
+      <div class="card"><div class="card-header"><div class="card-title">Headcount Mensual</div></div><div class="card-body"><canvas id="chartHeadcount" height="250"></canvas></div></div>
+      <div class="card"><div class="card-header"><div class="card-title">Rotación por Área</div></div><div class="card-body"><canvas id="chartTurnover" height="250"></canvas></div></div>
+    </div>
+    <div class="grid-2 gap-24">
+      <div class="card"><div class="card-header"><div class="card-title">Distribución por Género</div></div><div class="card-body"><canvas id="chartGender" height="250"></canvas></div></div>
+      <div class="card" style="background: linear-gradient(135deg, #fff, #f0fdfa); border: 1px solid var(--akm-cyan);"><div class="card-header"><div class="card-title" style="color:var(--akm-blue-deep)">Previsión IA: Riesgo de Rotación</div></div><div class="card-body"><canvas id="chartRisk" height="250"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- PAGE: AI Chat -->
+  <div class="page-content page hidden" id="page-aichat" style="padding:0;display:flex;flex-direction:column;height:calc(100vh - var(--topbar-height))">
+    <div style="padding:20px 24px 0;flex-shrink:0">
+      <div class="flex items-center gap-12 mb-16">
+        <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--akm-cyan),var(--akm-blue-light));display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(56,189,248,.3)">🤖</div>
+        <div><div style="font-size:var(--font-size-lg);font-weight:800;color:var(--gray-900)">AKM AI</div><div class="text-sm text-gray">Asistente inteligente de gestión de personas</div></div>
+      </div>
+    </div>
+    <div class="quick-chips" id="quickChips">
+      <div class="quick-chip" onclick="sendQuickChat(this)">📊 ¿Cuántos empleados activos hay?</div>
+      <div class="quick-chip" onclick="sendQuickChat(this)">💰 Resumen de última planilla</div>
+      <div class="quick-chip" onclick="sendQuickChat(this)">📅 Próximos cumpleaños del equipo</div>
+      <div class="quick-chip" onclick="sendQuickChat(this)">📈 Indicadores de rotación</div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg"><div class="chat-avatar bot-avatar">🤖</div><div class="chat-bubble bot-bubble">¡Hola! Soy <strong>AKM AI</strong>, tu asistente inteligente de gestión de personas. Puedo ayudarte con consultas sobre planillas, asistencia, desempeño y más. ¿En qué puedo ayudarte hoy?</div></div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="Escribe tu consulta..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+      <button class="chat-send-btn" onclick="sendChat()">➤</button>
+    </div>
+  <!-- PAGE: Organization -->
+  <div class="page-content page hidden" id="page-org">
+    <div class="flex items-center justify-between mb-24">
+      <div><h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--gray-900)">Mi Organización</h2><p class="text-sm text-gray mt-8">Estructura jerárquica de AKM (Actualizado en tiempo real)</p></div>
+    </div>
+    <div class="card" style="min-height: 500px; display:flex; align-items:center; justify-content:center; background:#f8fafc; overflow:auto; padding:40px; position:relative;">
+      <div id="orgChartContainer" class="org-tree-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+</main>
+
+  <!-- MODAL: Contract Renewal Console -->
+  <div class="modal-overlay" id="renewalModal" onclick="if(event.target===this) closeRenewalModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="renewalTitle">Consola de Renovación</h3>
+        <button class="close-modal" onclick="closeRenewalModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-sm text-gray mb-20" id="renewalSubtitle">Gestiona los cambios para el nuevo periodo laboral.</p>
+        
+        <form id="renewalForm" onsubmit="confirmRenewal(event)">
+          <input type="hidden" id="renewalEmpId">
+          
+          <div class="grid-2 gap-16 mb-20">
+            <div class="form-group">
+              <label class="form-label">Nueva Fecha de Vencimiento</label>
+              <input type="date" id="renewalEndDate" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Meses de Prórroga</label>
+              <select id="renewalMonths" class="form-input" onchange="updateRenewalDate(this.value)">
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="12">12 meses</option>
+                <option value="0">Manual</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group mb-20">
+            <label class="form-label">Actualizar Puesto (Ascensos/Cambios)</label>
+            <input type="text" id="renewalCargo" class="form-input" placeholder="Ej: Especialista Senior" required>
+            <div style="font-size:11px; color:var(--akm-blue-light); margin-top:4px;">💡 Puedes modificar el puesto para el nuevo contrato.</div>
+          </div>
+
+          <div class="card p-16 mb-24" style="background:var(--gray-50); border:1px dashed var(--gray-300);">
+            <div class="flex items-center gap-12">
+              <div style="font-size:20px;">🛡️</div>
+              <div class="text-xs text-gray">Al confirmar, se generará una **Adenda de Renovación** automáticamente en la bandeja de firma del colaborador.</div>
+            </div>
+          </div>
+
+          <div class="flex gap-12">
+            <button type="button" class="btn btn-ghost" style="flex:1" onclick="closeRenewalModal()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="flex:1">Aprobar y Enviar Contrato</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="js/dashboard.js"></script>
+  <!-- MODAL: Digital Signature -->
+  <div class="modal-overlay" id="signModal" onclick="if(event.target===this) closeSignModal()">
+    <div class="modal-card" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 id="signModalTitle" style="font-size:18px; font-weight:700; color:var(--gray-900);">Firmar Contrato Virtual</h3>
+        <button class="btn btn-ghost btn-sm" onclick="closeSignModal()">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 24px;">
+        <div style="background:var(--gray-50); padding:16px; border-radius:12px; margin-bottom:20px; border-left:4px solid var(--akm-blue-light);">
+          <div style="font-size:12px; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.5px; font-weight:700;">Documento a firmar</div>
+          <div id="signDocName" style="font-size:15px; font-weight:600; color:var(--akm-blue-deep); margin-top:4px;">Contrato Laboral.pdf</div>
+        </div>
+        
+        <form id="signForm" onsubmit="confirmSignature(event)">
+          <input type="hidden" id="signDocId">
+          <div class="form-group mb-20">
+            <label class="form-label" for="signerName">Nombre completo del firmante</label>
+            <input type="text" id="signerName" class="form-input" required readonly style="background:var(--gray-100); color:var(--gray-500);">
+            <div style="font-size:11px; color:var(--gray-400); margin-top:4px;">Este nombre aparecerá en el registro digital de la firma.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="signPass">Confirmación de Identidad (Contraseña)</label>
+            <input type="password" id="signPass" class="form-input" placeholder="Ingresa tu contraseña para firmar" required>
+            <div style="font-size:11px; color:var(--akm-blue-light); margin-top:4px;">🔐 Doble validación obligatoria por seguridad</div>
+          </div>
+          <div class="flex gap-12 mt-24">
+            <button type="button" class="btn btn-ghost" style="flex:1" onclick="closeSignModal()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" style="flex:1">Aceptar y Firmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
